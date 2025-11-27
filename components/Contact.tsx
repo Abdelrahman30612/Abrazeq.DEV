@@ -23,28 +23,36 @@ const Contact: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
               
               {/* Email Card */}
-              <div className="bg-zinc-900/50 backdrop-blur-md border border-purple-900/50 p-8 rounded-2xl hover:border-purple-500 transition-all duration-300 group flex flex-col items-center gap-4 hover:-translate-y-2">
+              <a 
+                href="mailto:bbm771729@gmail.com"
+                className="bg-zinc-900/50 backdrop-blur-md border border-purple-900/50 p-8 rounded-2xl hover:border-purple-500 transition-all duration-300 group flex flex-col items-center gap-4 hover:-translate-y-2 cursor-pointer"
+              >
                 <div className="w-16 h-16 rounded-full bg-purple-900/30 flex items-center justify-center text-purple-400 border border-purple-500/30 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
                   <Mail size={32} />
                 </div>
                 <div className="text-center">
                   <h4 className="text-white font-bold text-xl mb-2">البريد الإلكتروني</h4>
-                  <a href="mailto:bbm771729@gmail.com" className="text-gray-400 hover:text-purple-400 transition-colors block text-sm sm:text-base break-all">
+                  <span className="text-gray-400 group-hover:text-purple-400 transition-colors block text-sm sm:text-base break-all">
                     bbm771729@gmail.com
-                  </a>
+                  </span>
                 </div>
-              </div>
+              </a>
 
-              {/* Phone Card */}
-              <div className="bg-zinc-900/50 backdrop-blur-md border border-purple-900/50 p-8 rounded-2xl hover:border-purple-500 transition-all duration-300 group flex flex-col items-center gap-4 hover:-translate-y-2">
+              {/* WhatsApp Card */}
+              <a 
+                href="https://wa.me/201025565796" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-zinc-900/50 backdrop-blur-md border border-purple-900/50 p-8 rounded-2xl hover:border-purple-500 transition-all duration-300 group flex flex-col items-center gap-4 hover:-translate-y-2 cursor-pointer"
+              >
                  <div className="w-16 h-16 rounded-full bg-purple-900/30 flex items-center justify-center text-purple-400 border border-purple-500/30 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
                   <Phone size={32} />
                 </div>
                 <div className="text-center">
-                  <h4 className="text-white font-bold text-xl mb-2">الهاتف</h4>
-                  <p dir="ltr" className="text-gray-400 text-sm sm:text-base">01025565796</p>
+                  <h4 className="text-white font-bold text-xl mb-2">واتساب</h4>
+                  <p dir="ltr" className="text-gray-400 group-hover:text-purple-400 transition-colors text-sm sm:text-base">01025565796</p>
                 </div>
-              </div>
+              </a>
 
               {/* Location Card */}
               <div className="bg-zinc-900/50 backdrop-blur-md border border-purple-900/50 p-8 rounded-2xl hover:border-purple-500 transition-all duration-300 group flex flex-col items-center gap-4 hover:-translate-y-2">
