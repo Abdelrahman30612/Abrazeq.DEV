@@ -46,9 +46,6 @@ const Navbar: React.FC = () => {
           
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center border border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.5)] overflow-hidden bg-black">
-               <img src="https://i.ibb.co/WpKrnMcN/image.png" alt="Abrazeq Logo" className="w-full h-full object-cover" />
-            </div>
             <span className="font-bold text-2xl tracking-wider text-white">
               Abrazeq<span className="text-purple-500">.DEV</span>
             </span>
