@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-20">
           
           {/* Logo */}
-          <div className="flex-shrink-0 flex items-center gap-2">
+          <div className="flex-shrink-0 flex items-center gap-3">
             <span className="font-bold text-2xl tracking-wider text-white">
               Abrazeq<span className="text-purple-500">.DEV</span>
             </span>
