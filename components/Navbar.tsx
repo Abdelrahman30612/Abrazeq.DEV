@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Terminal } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { NAV_LINKS } from '../constants';
 
 const Navbar: React.FC = () => {
@@ -46,8 +46,8 @@ const Navbar: React.FC = () => {
           
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center gap-2">
-            <div className="w-10 h-10 bg-purple-900/50 rounded-lg flex items-center justify-center border border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.5)]">
-               <Terminal className="text-purple-400 w-6 h-6" />
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center border border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.5)] overflow-hidden bg-black">
+               <img src="https://i.ibb.co/h1wcYkcx/a-logo.png" alt="Abrazeq Logo" className="w-full h-full object-cover" />
             </div>
             <span className="font-bold text-2xl tracking-wider text-white">
               Abrazeq<span className="text-purple-500">.DEV</span>
