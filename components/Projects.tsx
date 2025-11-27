@@ -4,6 +4,82 @@ import { GOOGLE_SHEET_URL } from '../constants';
 import type { Project } from '../types';
 import { ExternalLink, Loader2, AlertCircle } from 'lucide-react';
 
+// مكون فرعي لبطاقة المشروع لادارة حالة "عرض المزيد" لكل بطاقة بشكل منفصل
+const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  // نحدد هل النص طويل بما يكفي لإظهار الزر أم لا (مثلاً أكثر من 120 حرف)
+  const isLongText = project.description.length > 120;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+      className="group relative bg-zinc-900/80 border border-purple-900/30 rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 flex flex-col h-full"
+    >
+      {/* Image Container */}
+      <div className="relative h-48 overflow-hidden flex-shrink-0">
+        <div className="absolute inset-0 bg-purple-900/20 group-hover:bg-transparent transition-all z-10" />
+        <img 
+          src={project.image} 
+          alt={project.title} 
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/800x600?text=Error+Loading';
+          }}
+          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+        />
+      </div>
+
+      {/* Content */}
+      <div className="p-6 flex flex-col flex-grow">
+        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">{project.title}</h3>
+        
+        {/* Description Section with Show More */}
+        <div className="flex-grow mb-4">
+          <p 
+            className={`text-gray-400 text-sm leading-relaxed transition-all duration-300 ${isExpanded ? '' : 'line-clamp-3'}`}
+            title={!isExpanded ? project.description : ''}
+          >
+            {project.description}
+          </p>
+          {isLongText && (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setIsExpanded(!isExpanded);
+              }}
+              className="text-purple-400 text-xs hover:text-purple-300 font-medium mt-2 focus:outline-none flex items-center gap-1 transition-colors"
+            >
+              {isExpanded ? 'عرض أقل' : 'عرض المزيد...'}
+            </button>
+          )}
+        </div>
+        
+        {/* Tags */}
+        {project.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-6 mt-auto">
+            {project.tags.map((tag, idx) => (
+              <span key={`${project.id}-tag-${idx}`} className="text-xs px-2 py-1 bg-purple-900/30 text-purple-300 border border-purple-700/30 rounded">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Actions */}
+        <div className="flex items-center gap-4">
+          <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-white bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors w-full justify-center">
+            <ExternalLink size={16} />
+            معاينة المشروع
+          </a>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -138,52 +214,7 @@ const Projects: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="group relative bg-zinc-900/80 border border-purple-900/30 rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 flex flex-col h-full"
-              >
-                {/* Image Container */}
-                <div className="relative h-48 overflow-hidden flex-shrink-0">
-                  <div className="absolute inset-0 bg-purple-900/20 group-hover:bg-transparent transition-all z-10" />
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'https://via.placeholder.com/800x600?text=Error+Loading';
-                    }}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">{project.title}</h3>
-                  <p className="text-gray-400 text-sm mb-4 line-clamp-3 flex-grow leading-relaxed" title={project.description}>{project.description}</p>
-                  
-                  {/* Tags */}
-                  {project.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {project.tags.map((tag, idx) => (
-                        <span key={`${project.id}-tag-${idx}`} className="text-xs px-2 py-1 bg-purple-900/30 text-purple-300 border border-purple-700/30 rounded">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Actions */}
-                  <div className="flex items-center gap-4 mt-auto">
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-white bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors w-full justify-center">
-                      <ExternalLink size={16} />
-                      معاينة المشروع
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
+              <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </div>
         )}
