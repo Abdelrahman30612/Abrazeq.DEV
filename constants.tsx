@@ -13,6 +13,17 @@ export const GOOGLE_SHEET_SKILLS_URL: string = "https://docs.google.com/spreadsh
 // رابط سكريبت التواصل (Apps Script)
 export const CONTACT_FORM_SCRIPT_URL: string = "https://script.google.com/macros/s/AKfycbwfLde4bBhAwFacN7oNCiaJPe9CYNzzlQYLjXFT9V6ExZY1jwA8ARcoFSeptaepYS8K/exec";
 
+// ----------------------------------------------------------------------
+// بيانات "من أنا" - About Me
+// ----------------------------------------------------------------------
+export const ABOUT_ME = {
+  name: "Abdelrahman mustafa (Abrazeq)",
+  title: "مطور واجهات أمامية ومصمم تجارب مستخدم",
+  description: "أنا مطور برمجيات شغوف بتحويل الأفكار المعقدة إلى تجارب ويب تفاعلية وسلسة. أمتلك خبرة واسعة في بناء واجهات المستخدم الحديثة باستخدام أحدث التقنيات. هدفي دائمًا هو كتابة كود نظيف، قابل للتطوير، ويقدم أداءً عاليًا، مع التركيز الشديد على جماليات التصميم وتجربة المستخدم.",
+  // يمكنك استبدال الرابط التالي برابط صورتك الشخصية المباشر
+  image: "https://i.ibb.co/WpKrnMcN/image.png"
+};
+
 export const NAV_LINKS = [
   { name: 'الرئيسية', href: '#hero' },
   { name: 'المهارات', href: '#skills' },
