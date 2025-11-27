@@ -1,107 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { NAV_LINKS } from '../constants';
-
-const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    setIsOpen(false);
-    
-    const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
-    
-    if (element) {
-      // Offset calculation is handled by CSS scroll-padding-top in index.html,
-      // but we use JS here to ensure the menu closes and for consistency.
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  return (
-    <nav 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent ${
-        scrolled ? 'bg-black/80 backdrop-blur-md border-purple-900/50 shadow-[0_0_20px_rgba(168,85,247,0.2)]' : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center border border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.5)] overflow-hidden bg-black">
-               <img src="https://i.ibb.co/h1wcYkcx/a-logo.png" alt="Abrazeq Logo" className="w-full h-full object-cover" />
-            </div>
-            <span className="font-bold text-2xl tracking-wider text-white">
-              Abrazeq<span className="text-purple-500">.DEV</span>
-            </span>
-          </div>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline gap-8">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="relative px-3 py-2 text-md font-medium text-gray-300 hover:text-white transition-colors duration-200 group cursor-pointer"
-                >
-                  {link.name}
-                  <span className="absolute bottom-0 right-0 w-0 h-0.5 bg-purple-500 transition-all duration-300 group-hover:w-full group-hover:right-auto group-hover:left-0" />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-300 hover:text-white p-2"
-            >
-              {isOpen ? <X className="h-8 w-8" /> : <Menu className="h-8 w-8" />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-black/95 backdrop-blur-xl border-t border-purple-900">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="text-gray-300 hover:text-white hover:bg-purple-900/20 block px-3 py-4 rounded-md text-base font-medium text-center border-l-4 border-transparent hover:border-purple-500 transition-all cursor-pointer"
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
-    </nav>
-  );
-};
-
-export default Navbar;
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abrazeq.DEV | بورتفوليو</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/h12zgt7t/image.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px; /* تعويض ارتفاع النافبار */
+      }
+      body {
+        font-family: 'Cairo', sans-serif;
+        background-color: #000;
+        overflow-x: hidden;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f0f0f;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #7e22ce;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #a855f7;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.0/client",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@react-three/fiber": "https://aistudiocdn.com/@react-three/fiber@^9.4.0",
+    "@react-three/drei": "https://aistudiocdn.com/@react-three/drei@^10.7.7",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "three": "https://aistudiocdn.com/three@^0.181.2",
+    "@emailjs/browser": "https://aistudiocdn.com/@emailjs/browser@^4.3.3"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+  </body>
+</html>
