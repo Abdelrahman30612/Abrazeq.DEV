@@ -29,6 +29,7 @@ export const NAV_LINKS = [
   { name: 'المهارات', href: '#skills' },
   { name: 'المشاريع', href: '#projects' },
   { name: 'تواصل معي', href: '#contact' },
+  { name: 'Abrazeq GPT', href: '#gpt', isSpecial: true },
 ];
 
 export const SKILLS: Skill[] = [
