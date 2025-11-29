@@ -5,7 +5,7 @@ import type { Project } from '../types';
 import { ExternalLink, Loader2, AlertCircle } from 'lucide-react';
 
 // مكون فرعي لبطاقة المشروع لادارة حالة "عرض المزيد" لكل بطاقة بشكل منفصل
-const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   
   // نحدد هل النص طويل بما يكفي لإظهار الزر أم لا (مثلاً أكثر من 120 حرف)
