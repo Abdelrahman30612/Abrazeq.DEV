@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sparkles } from 'lucide-react';
 import { NAV_LINKS } from '../constants';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onOpenGPT: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onOpenGPT }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -14,16 +18,19 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: typeof NAV_LINKS[0]) => {
     e.preventDefault();
     setIsOpen(false);
     
-    const targetId = href.replace('#', '');
+    if (link.isSpecial) {
+      onOpenGPT();
+      return;
+    }
+
+    const targetId = link.href.replace('#', '');
     const element = document.getElementById(targetId);
     
     if (element) {
-      // Offset calculation is handled by CSS scroll-padding-top in index.html,
-      // but we use JS here to ensure the menu closes and for consistency.
       const offset = 80;
       const elementPosition = element.getBoundingClientRect().top + window.scrollY;
       const offsetPosition = elementPosition - offset;
@@ -58,11 +65,18 @@ const Navbar: React.FC = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="relative px-3 py-2 text-md font-medium text-gray-300 hover:text-white transition-colors duration-200 group cursor-pointer"
+                  onClick={(e) => handleNavClick(e, link)}
+                  className={`relative px-3 py-2 text-md font-medium transition-colors duration-200 group cursor-pointer flex items-center gap-2 ${
+                    link.isSpecial 
+                      ? 'text-white bg-purple-600/20 border border-purple-500/50 rounded-full hover:bg-purple-600 hover:border-purple-500' 
+                      : 'text-gray-300 hover:text-white'
+                  }`}
                 >
+                  {link.isSpecial && <Sparkles size={16} className="text-purple-300 group-hover:text-white" />}
                   {link.name}
-                  <span className="absolute bottom-0 right-0 w-0 h-0.5 bg-purple-500 transition-all duration-300 group-hover:w-full group-hover:right-auto group-hover:left-0" />
+                  {!link.isSpecial && (
+                    <span className="absolute bottom-0 right-0 w-0 h-0.5 bg-purple-500 transition-all duration-300 group-hover:w-full group-hover:right-auto group-hover:left-0" />
+                  )}
                 </a>
               ))}
             </div>
@@ -88,9 +102,14 @@ const Navbar: React.FC = () => {
               <a
                 key={link.name}
                 href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="text-gray-300 hover:text-white hover:bg-purple-900/20 block px-3 py-4 rounded-md text-base font-medium text-center border-l-4 border-transparent hover:border-purple-500 transition-all cursor-pointer"
+                onClick={(e) => handleNavClick(e, link)}
+                className={`block px-3 py-4 rounded-md text-base font-medium text-center border-l-4 transition-all cursor-pointer ${
+                   link.isSpecial 
+                   ? 'bg-purple-900/30 text-white border-purple-500 flex items-center justify-center gap-2' 
+                   : 'text-gray-300 hover:text-white hover:bg-purple-900/20 border-transparent hover:border-purple-500'
+                }`}
               >
+                {link.isSpecial && <Sparkles size={18} />}
                 {link.name}
               </a>
             ))}
