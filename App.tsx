@@ -1,4 +1,5 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
@@ -6,8 +7,11 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import MatrixBackground from './components/MatrixBackground';
 import Scene3D from './components/Scene3D';
+import AbrazeqGPT from './components/AbrazeqGPT';
 
 const App: React.FC = () => {
+  const [isGPTOpen, setIsGPTOpen] = useState(false);
+
   return (
     <div className="min-h-screen relative text-white selection:bg-purple-500 selection:text-white">
       {/* Background Layer 1: Matrix Rain */}
@@ -18,9 +22,14 @@ const App: React.FC = () => {
         <Scene3D />
       </Suspense>
 
+      {/* GPT Overlay */}
+      <AnimatePresence>
+        {isGPTOpen && <AbrazeqGPT onClose={() => setIsGPTOpen(false)} />}
+      </AnimatePresence>
+
       {/* Foreground Layer: UI Content */}
-      <div className="relative z-10">
-        <Navbar />
+      <div className={`relative z-10 transition-all duration-500 ${isGPTOpen ? 'blur-sm scale-[0.98]' : ''}`}>
+        <Navbar onOpenGPT={() => setIsGPTOpen(true)} />
         <main>
           <Hero />
           <Skills />
