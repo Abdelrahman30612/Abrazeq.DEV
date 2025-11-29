@@ -3,17 +3,16 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, PerspectiveCamera, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
-// Extend JSX.IntrinsicElements to include React Three Fiber elements
-// This fixes TypeScript errors when using elements like <mesh>, <boxGeometry>, etc.
+// Explicitly define Three.js elements in JSX.IntrinsicElements to resolve TypeScript errors
 declare global {
   namespace JSX {
     interface IntrinsicElements {
+      ambientLight: any;
+      pointLight: any;
       mesh: any;
       boxGeometry: any;
       meshStandardMaterial: any;
       icosahedronGeometry: any;
-      ambientLight: any;
-      pointLight: any;
     }
   }
 }
